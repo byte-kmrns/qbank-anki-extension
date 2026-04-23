@@ -1,0 +1,126 @@
+:root {
+  color-scheme: light;
+  font-family: "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: #f4eee3;
+  color: #173041;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(22, 50, 79, 0.08), transparent 24%),
+    linear-gradient(180deg, #f6f1e8 0%, #efe6d6 100%);
+}
+
+.page {
+  min-height: 100vh;
+  padding: 40px 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: min(720px, 100%);
+  background: rgba(255, 252, 247, 0.96);
+  border: 1px solid rgba(23, 48, 65, 0.08);
+  border-radius: 22px;
+  box-shadow: 0 16px 40px rgba(23, 48, 65, 0.08);
+  padding: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #7a5c2e;
+}
+
+h1 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.1;
+}
+
+.muted {
+  color: #5b6f80;
+  line-height: 1.5;
+}
+
+.form {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.field,
+.checkbox {
+  display: grid;
+  gap: 8px;
+}
+
+.field span,
+.preview-label {
+  font-weight: 700;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(23, 48, 65, 0.14);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  background: #fffdf8;
+}
+
+.checkbox {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkbox input {
+  width: 18px;
+  height: 18px;
+}
+
+.preview {
+  padding: 16px;
+  border-radius: 16px;
+  background: #f6f8fb;
+  border: 1px solid #dde5ed;
+}
+
+.preview-value {
+  margin-top: 8px;
+  font-weight: 700;
+  color: #28587b;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.button.primary {
+  background: linear-gradient(135deg, #16324f 0%, #28587b 100%);
+  color: #f7fafc;
+}
+
+.button.secondary {
+  background: #edf2f6;
+  color: #183041;
+}

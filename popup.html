@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Quiz to Anki</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="popup">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Unofficial Chrome Extension</p>
+          <h1>Study Quiz to Anki</h1>
+          <p class="subtitle">Export AIIG qbank questions or NotebookLM quizzes into polished Anki cards.</p>
+        </div>
+        <button id="open-options" class="secondary-link" type="button">Options</button>
+      </header>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Anki</h2>
+          <span id="anki-pill" class="pill pill-neutral">Checking</span>
+        </div>
+        <p id="anki-message" class="muted">Checking for AnkiConnect on your computer.</p>
+        <button id="anki-authorize" class="button secondary" type="button">Authorize / Retry</button>
+      </section>
+
+      <section id="anki-setup-card" class="panel setup-panel hidden" aria-live="polite">
+        <div class="panel-head">
+          <h2>Connect Anki</h2>
+          <span class="pill pill-warning">First time</span>
+        </div>
+        <p class="muted">This extension connects automatically once AnkiConnect is installed and Anki is open.</p>
+        <ol class="setup-steps">
+          <li>Open Anki Desktop.</li>
+          <li>Go to <strong>Tools -&gt; Add-ons -&gt; Get Add-ons...</strong>.</li>
+          <li>Paste add-on code <code>2055492159</code>.</li>
+          <li>Restart Anki.</li>
+          <li>Keep Anki open, then click <strong>Authorize / Retry</strong>.</li>
+        </ol>
+        <div class="setup-actions">
+          <button id="open-ankiconnect-page" class="button secondary" type="button">Open AnkiConnect Page</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Current Page</h2>
+          <span id="page-pill" class="pill pill-neutral">Waiting</span>
+        </div>
+        <p id="page-summary" class="muted">Open the AIIG qbank or a NotebookLM quiz in the active tab to export what you are viewing.</p>
+        <div class="button-row button-row-current-page">
+          <button id="export-current-question" class="button primary" type="button" disabled>Add Current Question</button>
+          <button id="export-current-quiz" class="button secondary" type="button" disabled>Add Full Quiz</button>
+          <button id="export-missed-questions" class="button secondary button-span-full" type="button" disabled>Add Missed Questions</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>AIIG Library Export</h2>
+          <span id="library-count" class="pill pill-neutral">0 quizzes</span>
+        </div>
+        <input id="quiz-search" class="search" type="search" placeholder="Search AIIG quiz titles or categories">
+        <select id="quiz-select" class="quiz-list" size="8"></select>
+        <button id="export-selected-quiz" class="button primary full" type="button" disabled>Add Selected Quiz</button>
+      </section>
+
+      <section class="panel status-panel">
+        <div class="panel-head">
+          <h2>Status</h2>
+        </div>
+        <p id="status-message" class="muted">Ready.</p>
+        <p class="muted tiny">The extension talks only to the AIIG qbank, NotebookLM quiz pages, and your local AnkiConnect instance on this computer.</p>
+      </section>
+    </main>
+
+    <script src="shared.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

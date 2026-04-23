@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Quiz to Anki Options</title>
+    <link rel="stylesheet" href="options.css">
+  </head>
+  <body>
+    <main class="page">
+      <section class="card">
+        <p class="eyebrow">Settings</p>
+        <h1>Study Quiz to Anki</h1>
+        <p class="muted">These settings control how exported questions are organized inside Anki.</p>
+        <p class="muted">This is an unofficial helper for AIIG qbank exports and NotebookLM quiz exports. Content is read only from the visible source page and sent only to your local AnkiConnect instance.</p>
+
+        <form id="settings-form" class="form">
+          <label class="field">
+            <span>Deck root prefix (optional)</span>
+            <input id="deck-root" name="deckRoot" type="text" placeholder="Leave blank for AIIG::... or NotebookLM::...">
+          </label>
+
+          <label class="field">
+            <span>Deck layout</span>
+            <select id="deck-strategy" name="deckStrategy">
+              <option value="quiz">Source -> unit/notebook -> quiz</option>
+              <option value="single">One deck per source</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Note type name</span>
+            <input id="note-model-name" name="noteModelName" type="text" placeholder="Study Quiz Rich">
+          </label>
+
+          <label class="field">
+            <span>Extra tags</span>
+            <input id="extra-tags" name="extraTags" type="text" placeholder="school pharm exam2">
+          </label>
+
+          <label class="checkbox">
+            <input id="allow-duplicates" name="allowDuplicates" type="checkbox">
+            <span>Allow duplicate exports</span>
+          </label>
+
+          <div class="preview">
+            <div class="preview-label">Example deck path</div>
+            <div id="deck-preview" class="preview-value"></div>
+          </div>
+
+          <div class="actions">
+            <button class="button secondary" id="reset-defaults" type="button">Reset Defaults</button>
+            <button class="button primary" type="submit">Save Settings</button>
+          </div>
+        </form>
+
+        <p id="save-status" class="muted">Ready.</p>
+      </section>
+    </main>
+
+    <script src="shared.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>
