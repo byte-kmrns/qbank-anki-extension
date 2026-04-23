@@ -1,6 +1,9 @@
 const shared = window.AIIGAnkiShared;
 const NOTEBOOKLM_BRIDGE_REQUEST = "STUDY_QUIZ_ANKI_NOTEBOOKLM_REQUEST";
 const NOTEBOOKLM_BRIDGE_RESPONSE = "STUDY_QUIZ_ANKI_NOTEBOOKLM_RESPONSE";
+const DEFAULT_QUICK_PANEL_CORNER = shared && shared.DEFAULT_SETTINGS
+  ? shared.DEFAULT_SETTINGS.quickPanelCorner
+  : "bottom-right";
 const runtimeSite = detectRuntimeSite();
 const isTopWindow = window.top === window;
 let quickExporterUi = null;
@@ -113,6 +116,7 @@ function installQuickExporter() {
 
   const root = document.createElement("div");
   root.id = "aiig-anki-root";
+  root.className = `aiig-anki-corner-${DEFAULT_QUICK_PANEL_CORNER}`;
 
   const toggle = document.createElement("button");
   toggle.type = "button";
@@ -122,9 +126,61 @@ function installQuickExporter() {
   const panel = document.createElement("div");
   panel.className = "aiig-anki-panel aiig-anki-hidden";
 
+  const header = document.createElement("div");
+  header.className = "aiig-anki-panel-header";
+
   const title = document.createElement("div");
   title.className = "aiig-anki-panel-title";
   title.textContent = "Export to Anki";
+
+  const settingsButton = document.createElement("button");
+  settingsButton.type = "button";
+  settingsButton.className = "aiig-anki-settings-button";
+  settingsButton.innerHTML = "&#9881;";
+  settingsButton.setAttribute("aria-label", "Panel settings");
+  settingsButton.setAttribute("aria-expanded", "false");
+  settingsButton.title = "Panel settings";
+  settingsButton.addEventListener("click", () => {
+    const isOpen = !quickExporterUi.settingsPanel.classList.contains("aiig-anki-hidden");
+    setQuickExporterSettingsOpen(!isOpen);
+  });
+
+  header.appendChild(title);
+  header.appendChild(settingsButton);
+
+  const settingsPanel = document.createElement("div");
+  settingsPanel.className = "aiig-anki-settings aiig-anki-hidden";
+
+  const settingsLabel = document.createElement("div");
+  settingsLabel.className = "aiig-anki-settings-label";
+  settingsLabel.textContent = "Widget corner";
+
+  const cornerGrid = document.createElement("div");
+  cornerGrid.className = "aiig-anki-corner-grid";
+
+  const cornerOptions = [
+    ["top-left", "Top left"],
+    ["top-right", "Top right"],
+    ["bottom-left", "Bottom left"],
+    ["bottom-right", "Bottom right"]
+  ];
+  const cornerButtons = cornerOptions.map(([value, label]) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "aiig-anki-corner-option";
+    button.dataset.corner = value;
+    button.textContent = label;
+    button.addEventListener("click", () => {
+      saveQuickExporterCorner(value).catch((error) => {
+        showToast(shared.serializeError(error), "error");
+      });
+    });
+    cornerGrid.appendChild(button);
+    return button;
+  });
+
+  settingsPanel.appendChild(settingsLabel);
+  settingsPanel.appendChild(cornerGrid);
 
   const currentQuestionButton = document.createElement("button");
   currentQuestionButton.type = "button";
@@ -158,7 +214,8 @@ function installQuickExporter() {
     });
   });
 
-  panel.appendChild(title);
+  panel.appendChild(header);
+  panel.appendChild(settingsPanel);
   panel.appendChild(currentQuestionButton);
   panel.appendChild(currentQuizButton);
   panel.appendChild(missedQuestionsButton);
@@ -175,9 +232,17 @@ function installQuickExporter() {
     helper,
     missedQuestionsButton,
     panel,
+    settingsButton,
+    settingsPanel,
+    cornerButtons,
     root,
     toggle
   };
+
+  applyQuickExporterCorner(DEFAULT_QUICK_PANEL_CORNER);
+  shared.loadSettings()
+    .then((settings) => applyQuickExporterCorner(settings.quickPanelCorner))
+    .catch(() => applyQuickExporterCorner(DEFAULT_QUICK_PANEL_CORNER));
 
   toggle.addEventListener("click", () => {
     toggleQuickExporterPanel().catch((error) => {
@@ -190,6 +255,54 @@ function installQuickExporter() {
       closeQuickExporterPanel();
     }
   });
+}
+
+function normalizeQuickExporterCorner(corner) {
+  return shared.QUICK_PANEL_CORNERS.includes(corner)
+    ? corner
+    : DEFAULT_QUICK_PANEL_CORNER;
+}
+
+function quickExporterCornerLabel(corner) {
+  return normalizeQuickExporterCorner(corner).replace("-", " ");
+}
+
+function applyQuickExporterCorner(corner) {
+  if (!quickExporterUi) {
+    return;
+  }
+
+  const normalized = normalizeQuickExporterCorner(corner);
+  for (const value of shared.QUICK_PANEL_CORNERS) {
+    quickExporterUi.root.classList.remove(`aiig-anki-corner-${value}`);
+  }
+  quickExporterUi.root.classList.add(`aiig-anki-corner-${normalized}`);
+  quickExporterUi.cornerButtons.forEach((button) => {
+    const isSelected = button.dataset.corner === normalized;
+    button.classList.toggle("is-selected", isSelected);
+    button.setAttribute("aria-pressed", String(isSelected));
+  });
+}
+
+function setQuickExporterSettingsOpen(open) {
+  if (!quickExporterUi) {
+    return;
+  }
+
+  quickExporterUi.settingsPanel.classList.toggle("aiig-anki-hidden", !open);
+  quickExporterUi.settingsButton.classList.toggle("is-active", open);
+  quickExporterUi.settingsButton.setAttribute("aria-expanded", String(open));
+}
+
+async function saveQuickExporterCorner(corner) {
+  const normalized = normalizeQuickExporterCorner(corner);
+  applyQuickExporterCorner(normalized);
+  const settings = await shared.saveSettings({ quickPanelCorner: normalized });
+  applyQuickExporterCorner(settings.quickPanelCorner);
+  if (quickExporterUi) {
+    quickExporterUi.helper.textContent = `Widget corner saved: ${quickExporterCornerLabel(settings.quickPanelCorner)}.`;
+  }
+  showToast(`Widget moved to ${quickExporterCornerLabel(settings.quickPanelCorner)}.`, "success");
 }
 
 function disableQuickExporterActions() {
@@ -277,6 +390,7 @@ async function refreshQuickExporterPanel() {
 function closeQuickExporterPanel() {
   if (quickExporterUi) {
     quickExporterUi.panel.classList.add("aiig-anki-hidden");
+    setQuickExporterSettingsOpen(false);
   }
 }
 

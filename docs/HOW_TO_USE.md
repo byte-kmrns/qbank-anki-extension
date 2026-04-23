@@ -21,13 +21,20 @@
 1. Open a supported page:
    - an AIIG qbank quiz
    - or a NotebookLM quiz viewer
-2. Click the floating `Anki` button in the bottom-right corner.
+2. Click the floating `Anki` button in the page.
 3. You can also click the extension icon in Chrome and it will open that same in-page panel on supported pages.
 4. Choose:
    - `Add current question`
    - `Add full quiz`
    - `Add missed questions` for AIIG quizzes or completed NotebookLM quiz reviews with incorrect answers
 5. Wait for the success toast confirming the export.
+
+## Move the floating button
+
+1. Open the floating `Anki` panel.
+2. Click the gear button in the panel header.
+3. Choose `Top left`, `Top right`, `Bottom left`, or `Bottom right`.
+4. The extension saves that corner for future supported pages.
 
 ## AIIG example
 

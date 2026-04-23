@@ -14,8 +14,10 @@
     deckStrategy: "quiz",
     noteModelName: "Study Quiz Rich",
     extraTags: "",
-    allowDuplicates: false
+    allowDuplicates: false,
+    quickPanelCorner: "bottom-right"
   };
+  const QUICK_PANEL_CORNERS = ["top-left", "top-right", "bottom-left", "bottom-right"];
 
   function mergeSettings(saved) {
     const merged = { ...DEFAULT_SETTINGS, ...(saved || {}) };
@@ -31,6 +33,9 @@
     merged.noteModelName = trimInline(merged.noteModelName) || DEFAULT_SETTINGS.noteModelName;
     merged.extraTags = String(merged.extraTags || "");
     merged.allowDuplicates = !!merged.allowDuplicates;
+    merged.quickPanelCorner = QUICK_PANEL_CORNERS.includes(merged.quickPanelCorner)
+      ? merged.quickPanelCorner
+      : DEFAULT_SETTINGS.quickPanelCorner;
 
     return merged;
   }
@@ -348,6 +353,7 @@
     NOTEBOOKLM_ORIGIN,
     QBANK_API_BASE,
     QBANK_ORIGIN,
+    QUICK_PANEL_CORNERS,
     buildDeckName,
     buildTags,
     collectAiigMissedQuestionEntries,

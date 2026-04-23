@@ -22,6 +22,7 @@ Features:
 - add the full current AIIG or NotebookLM quiz from the page
 - add only the questions you got wrong in an AIIG quiz session or completed NotebookLM quiz review
 - use a same-tab floating export panel instead of leaving the study page
+- move the floating panel to whichever screen corner stays out of your way
 - show a first-run `Connect Anki` setup flow with the AnkiConnect add-on code
 - search and export any AIIG quiz from the popup
 - create a polished custom Anki note type automatically

@@ -16,6 +16,7 @@ This is an unofficial utility and is not affiliated with the AIIG qbank, Google,
 - exports the full current quiz from the live qbank page
 - exports only missed questions from AIIG quiz sessions and completed NotebookLM quiz reviews
 - shows a same-tab floating export panel instead of requiring a separate popup tab
+- lets you move the floating panel to any screen corner from the in-page gear menu
 - creates and maintains its own Anki note type, `Study Quiz Rich`
 - organizes cards into configurable decks and tags
 - avoids duplicate exports by default using a stable per-question key
@@ -49,13 +50,14 @@ If Anki is not connected yet, the popup and same-tab panel now show a `Connect A
 
 ### Quick export in the same tab
 
-When you are on the AIIG qbank or an open NotebookLM quiz, the extension injects a floating `Anki` button in the bottom-right corner. You can also click the extension icon in Chrome and it will open that same in-page panel on supported pages instead of opening a separate browser popup.
+When you are on the AIIG qbank or an open NotebookLM quiz, the extension injects a floating `Anki` button in the page. You can also click the extension icon in Chrome and it will open that same in-page panel on supported pages instead of opening a separate browser popup.
 
 From the in-page panel you can:
 
 - add the current question
 - add the full quiz
 - add only the questions you got wrong in an AIIG quiz session or completed NotebookLM quiz review
+- click the gear button to move the widget to the top-left, top-right, bottom-left, or bottom-right corner
 
 ### Options
 

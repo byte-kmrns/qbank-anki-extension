@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Study Quiz to Anki Exporter",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Unofficial exporter that sends AIIG qbank questions and NotebookLM quizzes to Anki through locally running AnkiConnect.",
   "permissions": [
     "storage"
